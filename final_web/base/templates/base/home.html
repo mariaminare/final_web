@@ -3,10 +3,27 @@
 {% block title %} <title>Home Page</title> {% endblock %}
 
 {% block content %}
-<div id="mydiv">
-    <h1 id="unique";class="new">Women Play Football</h1>
-    <h1 class="new">Women Play Football</h1>
+<br>
+<div>
     <h1>Women Play Football</h1>
     <img src="https://i.pinimg.com/564x/3b/bb/05/3bbb05d0f8d65e87810ae3d6f99b6098.jpg">
 </div>
+<hr>
+<br>
+
+<div style="display: flex; ">
+    {% for player in players %}
+        <div class="card" style="width: 18rem; margin-left: 30px;">
+              <img src="{{player.profile_picture}}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{player.first_name}} {{player.last_name}}</h5>
+                <h6 class="card-title">{{player.current_club}}</h6>
+                <p class="card-text">{{player.biography |slice:"0:200"}}</p>
+                <a href="#" class="btn btn-primary">Read More</a>
+              </div>
+        </div>
+    {% endfor %}
+</div>
+
+
 {% endblock %}
