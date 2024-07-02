@@ -1,0 +1,50 @@
+<style>
+    .home_container {
+        display: grid;
+        grid-template-columns: 1fr 5fr
+    }
+
+    .clubs {
+        margin: 90px 30px;
+    }
+</style>
+
+<div class="home_container">
+
+    <div class="clubs">
+        <h1>Clubs:</h1>
+        <br>
+        <a href="{{ request.path }}">ALL ({{ clubs.count }})</a>
+        {%for club in clubs%}
+        <hr>
+        <a href="{{ request.path }}?p={{club.name}}">{{club}} ({{club.players.count}})</a>
+        {% endfor %}
+    </div>
+
+
+
+     <div>
+        <br>
+
+        <div class="centered-content" >
+            <h1>{{heading}}</h1>
+        </div>
+
+
+        <br>
+
+        <div style="display: flex; ">
+            {% for player in players %}
+                <div class="card" style="width: 18rem; margin-left: 30px;">
+                      <img src="{{player.profile_picture}}" class="card-img-top" alt="..." style="width: 100%; height: 350px; object-fit: cover;">
+                      <div class="card-body">
+                        <h5 class="card-title">{{player.first_name}} {{player.last_name}}</h5>
+                        <h6 class="card-title">{{player.current_club}}</h6>
+                        <p class="card-text">{{player.biography |slice:"0:200"}}</p>
+                        <a href="#" class="btn btn-primary">Read More</a>
+                      </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
