@@ -2,19 +2,11 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 class Nation(models.Model):
         name=models.CharField(max_length=100)
-        world_ranking=models.IntegerField()
+
         def __str__(self):
                 return f"{self.name}"
 class Club(models.Model):
         name=models.CharField(max_length=100)
-        foundation_date=models.DateField(null=True)
-        ground=models.CharField(max_length=100)
-        capacity=models.IntegerField()
-        president=models.CharField(max_length=100)
-        head_coach=models.CharField(max_length=100)
-        league=models.CharField(max_length=100)
-        website= models.URLField()
-
         def __str__(self):
                 return self.name
 # Create your models here.
@@ -34,7 +26,7 @@ class Player(models.Model):
         preferred_foot = models.CharField(max_length=10)
         biography = models.TextField()
         achievements = models.TextField()
-        profile_picture = models.URLField()
+        picture = models.ImageField(blank=True,null=True)
 
         def __str__(self):
                 return f"{self.first_name} _ {self.last_name}"

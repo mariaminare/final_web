@@ -1,0 +1,88 @@
+{% extends 'main.html' %}
+{% block title %} <title>Add Page</title> {% endblock %}
+
+{% block content %}
+     <h1>Add Player:</h1>
+     <form action="" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div>
+               <label>First Name:</label>
+               {{ form.first_name}}
+          </div>
+           <div>
+               <label>Last Name:</label>
+               {{ form.last_name}}
+          </div>
+         <div>
+               <label>Date Of Birth:</label>
+               {{ form.date_of_birth}}
+          </div>
+          <div>
+               <label for="player_nation">Nationality:</label>
+              <input required type="text", name="nation", list="nation-list">
+              <datalist id="nation-list">
+                  {% for nation in nations %}
+                    <select id="player_nation">
+                        <option value="{{ nation.name }}">{{nation.name}}</option>
+                    </select>
+                  {% endfor%}
+              </datalist>
+          </div>
+          <div>
+               <label>Position:</label>
+               {{ form.position}}
+          </div>
+         <div>
+               <label for="player_club">Club:</label>
+              <input required type="text", name="club", list="club-list">
+              <datalist id="club-list">
+                  {% for nation in nations %}
+                    <select id="player_club">
+                        <option value="{{ club.name }}">{{club.name}}</option>
+                    </select>
+                  {% endfor%}
+              </datalist>
+          </div>
+           <div>
+               <label>Previous Clubs:</label>
+               <br>
+               {{ form.previous_clubs}}
+          </div>
+         <div>
+               <label>International Caps:</label>
+               {{ form.international_caps}}
+          </div>
+         <div>
+               <label>Goals Scored:</label>
+               {{ form.goals_scored}}
+          </div>
+         <div>
+               <label>Weight:</label>
+               {{ form.weight}}
+          </div>
+         <div>
+               <label>height:</label>
+               {{ form.height}}
+          </div>
+         <div>
+               <label>Preferred Foot:</label>
+               {{ form.preferred_foot}}
+          </div>
+         <div>
+               <label>Biography:</label>
+               {{ form.biography}}
+          </div>
+         <div>
+               <label>Achievements:</label>
+               {{form.achievements}}
+          </div>
+         <div>
+               <label>Picture:</label>
+               {{ form.picture}}
+          </div>
+         <input type="submit" value="Add Player">
+     </form>
+
+
+
+{% endblock %}

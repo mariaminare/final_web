@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Player,User,Club
+from .models import Player,User,Club, Nation
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import MyUserCreationForm
+from .forms import MyUserCreationForm, PlayerForm
 
 # Create your views here.
 def home(request):
@@ -89,4 +89,42 @@ def register_page(request):
             return redirect('home')
     context={'form':form}
     return render(request, 'base/register.html', context)
+
+
+def add_player(request):
+    nations= Nation.objects.all()
+    clubs=Club.objects.all()
+    form=PlayerForm()
+
+    if request.method == "POST":
+        player_nation= request.POST.get("nation")
+        player_club=request.POST.get("club")
+
+        nation, created= Nation.objects.get_or_create(name=player_nation)
+        club, created= Club.objects.get_or_create(name=player_club)
+
+        form=PlayerForm(request.POST)
+
+        new_player=Player(
+            picture=request.FILES['picture'],
+            first_name=form.data['first_name'],
+            last_name=form.data['last_name'],
+            date_of_birth=form.data['date_of_birth'],
+            nation=nation,
+            position=form.data['position'],
+            previous_clubs=form.data['previous_clubs'],
+            international_caps=form.data['international_caps'],
+            goals_scored=form.data['goals_scored'],
+            height=form.data['height'],
+            weight=form.data['weight'],
+            preferred_foot=form.data['preferred_foot'],
+            biography=form.data['biography'],
+            achievements=form.data['achievemnts']
+        )
+        new_player.save()
+        new_player.club.add(club)
+        return redirect('home')
+
+    context= {'form':form,'nations':nations, 'clubs':clubs}
+    return render(request, 'base/add_player.html',context)
 
