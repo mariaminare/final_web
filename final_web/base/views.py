@@ -119,10 +119,11 @@ def add_player(request):
             weight=form.data['weight'],
             preferred_foot=form.data['preferred_foot'],
             biography=form.data['biography'],
-            achievements=form.data['achievemnts']
+            achievements=form.data['achievements'],
+            club=club
         )
         new_player.save()
-        new_player.club.add(club)
+        # new_player.club.add(club)
         return redirect('home')
 
     context= {'form':form,'nations':nations, 'clubs':clubs}
