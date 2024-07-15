@@ -5,10 +5,14 @@ from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import MyUserCreationForm, PlayerForm
+from .seeder import seeder_func
+from django.contrib import messages
+
 
 # Create your views here.
 def home(request):
     p=request.GET.get("p") if request.GET.get('p') != None else ""
+    # seeder_func()
     #players=Player.objects.all()
     players= Player.objects.filter(Q(first_name__icontains=p) | Q(last_name__icontains=p) |Q(nation__name__icontains=p)| Q(club__name__icontains=p) )
     #players=list(set(players)) ar mchirdeba, ertze met clubsa da erovnul gundshi ver iqnebian
@@ -63,14 +67,13 @@ def login_page(request):
         try:
             user= User.objects.get(username=username)
         except:
-            pass #Error Message
+            messages.error(request,"Username doesn't exist!")
         user=  authenticate(request, username=username, password=password)
         if user is not None:
             login(request,user)
             return redirect('home')
         else:
-            pass  #Error Message
-
+            messages.error(request,"Username or password is incorrect!")
     return render(request, 'base/login.html')
 
 def logout_page(request):
@@ -120,7 +123,8 @@ def add_player(request):
             preferred_foot=form.data['preferred_foot'],
             biography=form.data['biography'],
             achievements=form.data['achievements'],
-            club=club
+            club=club,
+            creator=request.user
         )
         new_player.save()
         # new_player.club.add(club)

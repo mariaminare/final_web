@@ -28,6 +28,13 @@ class Player(models.Model):
         achievements = models.TextField()
         picture = models.ImageField(blank=True,null=True)
 
+        creator = models.ForeignKey('User', on_delete=models.SET("Unknown Creator"))
+        created=models.DateTimeField(auto_now_add=True)
+        # updated = models.DateTimeField(auto_now=True)
+
+        # class Meta:
+        #     ordering= ['first_name']
+
         def __str__(self):
                 return f"{self.first_name} _ {self.last_name}"
 class User(AbstractUser):
