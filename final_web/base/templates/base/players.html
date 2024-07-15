@@ -1,57 +1,282 @@
-<style>
-    .home_container {
-        display: grid;
-        grid-template-columns: 1fr 5fr
-    }
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .home_container {
+            display: grid;
+            grid-template-columns: 1fr 5fr
+        }
 
-    .clubs {
-        margin: 90px 30px;
-    }
-</style>
+        .clubs {
+            margin: 90px 30px;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap; /* Ensure the cards wrap properly */
+        }
+
+        .card {
+            margin-bottom: 30px;
+            margin-right: 30px;
+            width: 18rem;
+        }
+        body {
+    background-color: #DBCAD2 ;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+    </style>
+</head>
+<body>
 
 <div class="home_container">
-
     <div class="clubs">
         <h1>Clubs:</h1>
         <br>
         <a href="{{ request.path }}">ALL ({{ clubs.count }})</a>
-        {%for club in clubs%}
-        <hr>
-        <a href="{{ request.path }}?p={{club.name}}">{{club}} ({{club.players.count}})</a>
+        {% for club in clubs %}
+            <hr>
+            <a href="{{ request.path }}?p={{ club.name }}">{{ club }} ({{ club.players.count }})</a>
         {% endfor %}
     </div>
 
-
-
-     <div>
+    <div>
         <br>
 
-        <div class="centered-content" >
-            <h1>{{heading}}</h1>
+        <div class="centered-content">
+            <h1>{{ heading }}</h1>
         </div>
-
-
+        <a href="{% url 'add' %}">Add Player</a>
+        <br>
         <br>
 
-        <div style="display: flex; ">
+        <div class="row">
             {% for player in players %}
-                <div class="card" style="width: 18rem; margin-left: 30px;">
-                      <img src="{{player.picture.url}}" class="card-img-top" alt="..." style="width: 100%; height: 350px; object-fit: cover;">
-                      <div class="card-body">
-                        <h5 class="card-title">{{player.first_name}} {{player.last_name}}</h5>
-                        <h6 class="card-title">{{player.club}}</h6>
-                        <p class="card-text">{{player.biography |slice:"0:200"}}</p>
-                          {% if request.user.is_authenticated %}
-                            <a href="#" class="btn btn-primary">Read More</a>
-                             {% if player in request.user.players.all%}
+                <div class="card">
+                    <img src="{{ player.picture.url }}" class="card-img-top" alt="..." style="width: 100%; height: 350px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ player.first_name }} {{ player.last_name }}</h5>
+                        <h6 class="card-title">{{ player.club }}</h6>
+                        <p class="card-text">{{ player.biography|slice:"0:200" }}...</p>
+                        {% if request.user.is_authenticated %}
+                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#bioModal" data-bio="{{ player.biography }}" data-name="{{ player.first_name }} {{ player.last_name }}">Read More</a>
+                            {% if player in request.user.players.all %}
                                 <a href="{% url 'delete' player.player_id %}" class="btn btn-primary">Delete</a>
-                             {% else %}
-                                 <a href="{% url 'adding' player.player_id %}" class="btn btn-primary">Add</a>
-                             {% endif %}
-                          {% endif %}
-                      </div>
+                            {% else %}
+                                <a href="{% url 'adding' player.player_id %}" class="btn btn-primary">Add</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
                 </div>
             {% endfor %}
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="bioModal" tabindex="-1" role="dialog" aria-labelledby="bioModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bioModalLabel">Biography</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="fullBio"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#bioModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var bio = button.data('bio'); // Extract info from data-* attributes
+        var name = button.data('name'); // Extract the player's name
+        var modal = $(this);
+        modal.find('.modal-title').text(name + "'s Biography");
+        modal.find('.modal-body #fullBio').text(bio);
+    });
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<style>-->
+<!--    .home_container {-->
+<!--        display: grid;-->
+<!--        grid-template-columns: 1fr 5fr-->
+<!--    }-->
+
+<!--    .clubs {-->
+<!--        margin: 90px 30px;-->
+<!--    }-->
+
+<!--    .row{-->
+<!--        display: flex;-->
+<!--        flex-wrap: wrap;-->
+<!--    }-->
+
+<!--    .card{-->
+<!--        margin-bottom: 30px;-->
+<!--    }-->
+
+
+<!--</style>-->
+
+<!--<div class="home_container">-->
+
+<!--    <div class="clubs">-->
+<!--        <h1>Clubs:</h1>-->
+<!--        <br>-->
+<!--        <a href="{{ request.path }}">ALL ({{ clubs.count }})</a>-->
+<!--        {%for club in clubs%}-->
+<!--        <hr>-->
+<!--        <a href="{{ request.path }}?p={{club.name}}">{{club}} ({{club.players.count}})</a>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+
+
+
+<!--     <div>-->
+<!--        <br>-->
+
+<!--        <div class="centered-content" >-->
+<!--            <h1>{{heading}}</h1>-->
+<!--        </div>-->
+<!--         <a href="{% url 'add' %}">Add Player</a>-->
+<!--         <br>-->
+
+
+<!--        <br>-->
+
+<!--        <div style="display: flex;" class="row">-->
+<!--            {% for player in players %}-->
+<!--                <div class="card" style="width: 18rem; margin-left: 30px;">-->
+<!--                      <img src="{{player.picture.url}}" class="card-img-top" alt="..." style="width: 100%; height: 350px; object-fit: cover;">-->
+<!--                      <div class="card-body">-->
+<!--                        <h5 class="card-title">{{player.first_name}} {{player.last_name}}</h5>-->
+<!--                        <h6 class="card-title">{{player.club}}</h6>-->
+<!--                        <p class="card-text">{{player.biography |slice:"0:200"}}</p>-->
+<!--                          {% if request.user.is_authenticated %}-->
+<!--                            <a href="#" class="btn btn-primary">Read More</a>-->
+<!--                             {% if player in request.user.players.all%}-->
+<!--                                <a href="{% url 'delete' player.player_id %}" class="btn btn-primary">Delete</a>-->
+<!--                             {% else %}-->
+<!--                                 <a href="{% url 'adding' player.player_id %}" class="btn btn-primary">Add</a>-->
+<!--                             {% endif %}-->
+<!--                          {% endif %}-->
+<!--                      </div>-->
+<!--                </div>-->
+<!--            {% endfor %}-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<style>-->
+<!--    .home_container {-->
+<!--        display: grid;-->
+<!--        grid-template-columns: 1fr 5fr-->
+<!--    }-->
+
+<!--    .clubs {-->
+<!--        margin: 90px 30px;-->
+<!--    }-->
+<!--</style>-->
+
+<!--<div class="home_container">-->
+
+<!--    <div class="clubs">-->
+<!--        <h1>Clubs:</h1>-->
+<!--        <br>-->
+<!--        <a href="{{ request.path }}">ALL ({{ clubs.count }})</a>-->
+<!--        {%for club in clubs%}-->
+<!--        <hr>-->
+<!--        <a href="{{ request.path }}?p={{club.name}}">{{club}} ({{club.players.count}})</a>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+
+
+
+<!--     <div>-->
+<!--        <br>-->
+
+<!--        <div class="centered-content" >-->
+<!--            <h1>{{heading}}</h1>-->
+<!--        </div>-->
+
+
+<!--        <br>-->
+
+<!--        <div style="display: flex; ">-->
+<!--            {% for player in players %}-->
+<!--                <div class="card" style="width: 18rem; margin-left: 30px;">-->
+<!--                      <img src="{{player.picture.url}}" class="card-img-top" alt="..." style="width: 100%; height: 350px; object-fit: cover;">-->
+<!--                      <div class="card-body">-->
+<!--                        <h5 class="card-title">{{player.first_name}} {{player.last_name}}</h5>-->
+<!--                        <h6 class="card-title">{{player.club}}</h6>-->
+<!--                        <p class="card-text">{{player.biography |slice:"0:200"}}</p>-->
+<!--                          {% if request.user.is_authenticated %}-->
+<!--                            <a href="#" class="btn btn-primary">Read More</a>-->
+<!--                             {% if player in request.user.players.all%}-->
+<!--                                <a href="{% url 'delete' player.player_id %}" class="btn btn-primary">Delete</a>-->
+<!--                             {% else %}-->
+<!--                                 <a href="{% url 'adding' player.player_id %}" class="btn btn-primary">Add</a>-->
+<!--                             {% endif %}-->
+<!--                          {% endif %}-->
+<!--                      </div>-->
+<!--                </div>-->
+<!--            {% endfor %}-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
