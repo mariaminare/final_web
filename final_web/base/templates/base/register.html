@@ -1,20 +1,73 @@
-{% extends 'main.html' %}
 {% block title %} <title>Register Page</title> {% endblock %}
-
 {% block content %}
-            <h1>Register Page</h1>
-            <div>
-                <form method="POST" action="">
-                        {% csrf_token %}
-                        {{form.as_p}}
-                    <input type="submit" value="Register">
+<style>
+    body {
+        background-image: url('https://wallpapers.com/images/hd/blazing-soccer-ball-hd-rcfdrgy7wulxl8sc.webp');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
 
-                    <br><br>
-                      <p>Already signed up?</p>
-                      <a href="{% url 'login' %}">Login</a>
+    .container {
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: relative; /* Ensure positioning relative for absolute positioning inside */
+    }
 
-                </form>
+    h1 {
+        margin-bottom: 20px;
+    }
 
-            </div>
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
+    form p {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    input[type="submit"] {
+        margin-top: 20px;
+    }
+
+    .home-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #ffffff;
+        border: 1px solid #ccc;
+        padding: 8px 16px;
+        border-radius: 5px;
+        text-decoration: none;
+        color: #000000;
+        font-weight: bold;
+    }
+</style>
+
+<div class="container">
+    <h1>Register Page</h1>
+    <a href="{% url 'home' %}" class="home-button">Home</a>
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Register">
+        <br><br>
+        <p>Already signed up?</p>
+        <a href="{% url 'login' %}">Login</a>
+    </form>
+</div>
 {% endblock %}

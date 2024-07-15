@@ -1,26 +1,81 @@
-{% extends 'main.html' %}
+
 {% block title %} <title>Login Page</title> {% endblock %}
 
 {% block content %}
-            <h1>Login Page</h1>
-            <div>
-                <form method="POST" action="">
-                        {% csrf_token %}
-                    <label>Username:</label>
-                    <br>
-                    <input type="text" name="username" placeholder="Enter User">
-                    <br>
-                    <label>Password::</label>
-                    <br>
-                    <input type="password" name="password" placeholder="Enter Password">
-                    <input type="submit" value="Login">
+<style>
+    body {
+        background-image: url('https://wallpapers.com/images/hd/blazing-soccer-ball-hd-rcfdrgy7wulxl8sc.webp');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
 
-                    <br><br>
-                      <p>Haven't signed up yet?</p>
-                      <a href="{% url 'register' %}">Sign Up</a>
+    .container {
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
+        width: 600px;
+    }
 
-                </form>
+    h1 {
+        margin-bottom: 20px;
+    }
 
-            </div>
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    label {
+        margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    .home-button {
+        position: absolute;
+        top: 10px; /* Adjust top position as needed */
+        right: 10px; /* Adjust right position as needed */
+        background-color: #ffffff;
+        border: 1px solid #ccc;
+        padding: 8px 16px;
+        border-radius: 5px;
+        text-decoration: none;
+        color: #000000;
+        font-weight: bold;
+    }
+</style>
+
+<div class="container">
+    <h1>Login Page</h1>
+    <a href="{% url 'home' %}" class="home-button">Home</a>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" placeholder="Enter User">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Enter Password">
+        <input type="submit" value="Login">
+        <p>Haven't signed up yet? <a href="{% url 'register' %}">Sign Up</a></p>
+    </form>
+</div>
 
 {% endblock %}

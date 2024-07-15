@@ -2,87 +2,141 @@
 {% block title %} <title>Add Page</title> {% endblock %}
 
 {% block content %}
-     <h1>Add Player:</h1>
-     <form action="" method="POST" enctype="multipart/form-data">
-          {% csrf_token %}
-          <div>
-               <label>First Name:</label>
-               {{ form.first_name}}
-          </div>
-           <div>
-               <label>Last Name:</label>
-               {{ form.last_name}}
-          </div>
-         <div>
-               <label>Date Of Birth:</label>
-               {{ form.date_of_birth}}
-          </div>
-          <div>
-               <label for="player_nation">Nationality:</label>
-              <input required type="text", name="nation", list="nation-list">
-              <datalist id="nation-list">
-                  {% for nation in nations %}
-                    <select id="player_nation">
-                        <option value="{{ nation.name }}">{{nation.name}}</option>
-                    </select>
-                  {% endfor%}
-              </datalist>
-          </div>
-          <div>
-               <label>Position:</label>
-               {{ form.position}}
-          </div>
-         <div>
-               <label for="player_club">Club:</label>
-              <input required type="text", name="club", list="club-list">
-              <datalist id="club-list">
-                  {% for nation in nations %}
-                    <select id="player_club">
-                        <option value="{{ club.name }}">{{club.name}}</option>
-                    </select>
-                  {% endfor%}
-              </datalist>
-          </div>
-           <div>
-               <label>Previous Clubs:</label>
-               <br>
-               {{ form.previous_clubs}}
-          </div>
-         <div>
-               <label>International Caps:</label>
-               {{ form.international_caps}}
-          </div>
-         <div>
-               <label>Goals Scored:</label>
-               {{ form.goals_scored}}
-          </div>
-         <div>
-               <label>Height:</label>
-               {{ form.height}}
-          </div>
-         <div>
-               <label>Weight:</label>
-               {{ form.weight}}
-          </div>
-         <div>
-               <label>Preferred Foot:</label>
-               {{ form.preferred_foot}}
-          </div>
-         <div>
-               <label>Biography:</label>
-               {{ form.biography}}
-          </div>
-         <div>
-               <label>Achievements:</label>
-               {{form.achievements}}
-          </div>
-         <div>
-               <label>Picture:</label>
-               {{ form.picture}}
-          </div>
-         <input type="submit" value="Add Player">
-     </form>
+<style>
+    body {
+        background-color: #DBCAD2; /* Your preferred background color */
+    }
 
+    .container {
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 45%;            /* Adjust width as needed */
+        margin: auto;          / * Center the container horizontally */
+    }
 
+    form {
+        text-align: left; /* Ensure form elements are left-aligned */
+    }
+
+    form div {
+        margin-bottom: 10px;
+        text-align: center; /* Center contents of each div */
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    textarea {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+</style>
+
+<div class="container">
+    <h1>Add Player:</h1>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            <label for="first_name">First Name:</label>
+            {{ form.first_name }}
+        </div>
+        <div>
+            <label for="last_name">Last Name:</label>
+            {{ form.last_name }}
+        </div>
+        <div>
+            <label for="date_of_birth">Date Of Birth:</label>
+            {{ form.date_of_birth }}
+        </div>
+        <div>
+            <label for="player_nation">Nationality:</label>
+            <input required type="text" name="nation" list="nation-list">
+            <datalist id="nation-list">
+                {% for nation in nations %}
+                    <option value="{{ nation.name }}">{{ nation.name }}</option>
+                {% endfor %}
+            </datalist>
+        </div>
+        <div>
+            <label for="position">Position:</label>
+            {{ form.position }}
+        </div>
+        <div>
+            <label for="player_club">Club:</label>
+            <input required type="text" name="club" list="club-list">
+            <datalist id="club-list">
+                {% for club in clubs %}
+                    <option value="{{ club.name }}">{{ club.name }}</option>
+                {% endfor %}
+            </datalist>
+        </div>
+        <div>
+            <label for="previous_clubs">Previous Clubs:</label>
+            <br>
+            {{ form.previous_clubs }}
+        </div>
+        <div>
+            <label for="international_caps">International Caps:</label>
+            {{ form.international_caps }}
+        </div>
+        <div>
+            <label for="goals_scored">Goals Scored:</label>
+            {{ form.goals_scored }}
+        </div>
+        <div>
+            <label for="height">Height:</label>
+            {{ form.height }}
+        </div>
+        <div>
+            <label for="weight">Weight:</label>
+            {{ form.weight }}
+        </div>
+        <div>
+            <label for="preferred_foot">Preferred Foot:</label>
+            {{ form.preferred_foot }}
+        </div>
+        <div>
+            <label for="biography">Biography:</label>
+            {{ form.biography }}
+        </div>
+        <div>
+            <label for="achievements">Achievements:</label>
+            {{ form.achievements }}
+        </div>
+        <div>
+            <label for="picture">Picture:</label>
+            {{ form.picture }}
+        </div>
+        <input type="submit" value="Add Player">
+    </form>
+</div>
 
 {% endblock %}
