@@ -126,10 +126,24 @@ def add_player(request):
             club=club,
             creator=request.user
         )
-        new_player.save()
-        # new_player.club.add(club)
+
+        if not (Player.objects.filter(first_name=new_player.first_name) and Player.objects.filter(last_name=new_player.last_name) and Player.objects.filter(date_of_birth=new_player.date_of_birth)):
+            new_player.save()
+            # new_player.club.add(club)
+            return redirect('home')
+
+
         return redirect('home')
 
     context= {'form':form,'nations':nations, 'clubs':clubs}
     return render(request, 'base/add_player.html',context)
+
+
+def delete_player(request,id):
+    player=Player.objects.get(player_id=id)
+    if request.method == 'POST':
+        player.picture.delete #static/files aqedanac shlis suratebs
+        player.delete()
+        return redirect('home')
+    return render(request, 'base/delete.html', {'player': player})
 
