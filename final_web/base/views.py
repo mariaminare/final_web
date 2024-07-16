@@ -4,7 +4,7 @@ from .models import Player,User,Club, Nation
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import MyUserCreationForm, PlayerForm
+from .forms import MyUserCreationForm, PlayerForm, UserForm
 from .seeder import seeder_func
 from django.contrib import messages
 
@@ -147,3 +147,15 @@ def delete_player(request,id):
         return redirect('home')
     return render(request, 'base/delete.html', {'player': player})
 
+
+@login_required(login_url='login')
+def update_user(request):
+    user= request.user
+    form= UserForm(instance=user)
+
+    if request.method == 'POST':
+        form = UserForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile', user.id )
+    return render(request, 'base/update_user.html',{'form':form})

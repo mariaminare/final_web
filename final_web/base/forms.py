@@ -12,4 +12,10 @@ class PlayerForm(ModelForm):
         model = Player
         fields = '__all__'
 
+class UserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'avatar', 'email', 'bio', 'players']
+
+
 

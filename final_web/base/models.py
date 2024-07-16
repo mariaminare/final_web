@@ -39,3 +39,5 @@ class Player(models.Model):
                 return f"{self.first_name} _ {self.last_name}"
 class User(AbstractUser):
         players = models.ManyToManyField(Player, blank=True, related_name="users")
+        bio = models.TextField(null=True)
+        avatar = models.ImageField(null=True, default='default.jpg')
