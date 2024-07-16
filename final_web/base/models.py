@@ -32,8 +32,8 @@ class Player(models.Model):
         created=models.DateTimeField(auto_now_add=True)
         # updated = models.DateTimeField(auto_now=True)
 
-        # class Meta:
-        #     ordering= ['first_name']
+        class Meta:
+            ordering= ['first_name']
 
         def __str__(self):
                 return f"{self.first_name} _ {self.last_name}"

@@ -12,10 +12,13 @@
     <body>
 
     {% include 'navbar.html' %}
+
     {% if messages %}
-    <ul class="messages">
         {% for message in messages %}
-            <li>{{ message }}</li>
+        <div class="alert alert-danger alert-dismissible">
+            <button class="btn-close" type="button" data-bs-dismiss="alert"></button>
+            <strong>{{ message }}</strong>
+        </div>
         {% endfor %}
     </ul>
     {% endif %}
