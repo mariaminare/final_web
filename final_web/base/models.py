@@ -41,3 +41,17 @@ class User(AbstractUser):
         players = models.ManyToManyField(Player, blank=True, related_name="users")
         bio = models.TextField(null=True)
         avatar = models.ImageField(null=True, default='default.jpg')
+
+class Comment(models.Model):
+        user = models.ForeignKey(User, on_delete=models.CASCADE)
+        player = models.ForeignKey(Player, on_delete=models.CASCADE)
+        content = models.TextField()
+        created= models.DateTimeField(auto_now_add=True)
+
+        class Meta:
+                ordering = ['-created']
+
+        def __str__(self):
+                return self.body
+
+

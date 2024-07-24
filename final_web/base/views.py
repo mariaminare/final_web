@@ -4,7 +4,7 @@ from .models import Player,User,Club, Nation
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import MyUserCreationForm, PlayerForm, UserForm
+from .forms import MyUserCreationForm, PlayerForm, UserForm, CommentForm
 from .seeder import seeder_func
 from django.contrib import messages
 
