@@ -140,7 +140,7 @@
                                         <img src="{{ comment.user.avatar.url }}" class="comment-user-avatar" alt="Avatar">
                                         <div class="comment-content">
                                             <strong>{{ comment.user.username }}:</strong> {{ comment.content }}
-                                            <small>{{ comment.created_at|date:"d M Y H:i" }}</small>
+                                            <small>{{ comment.created_at|timesince }} ago </small>
                                             {% if request.user == comment.user %}
                                                 <form method="post" action="{% url 'delete_comment' comment.id %}" style="display: inline;">
                                                     {% csrf_token %}
