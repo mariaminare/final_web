@@ -17,12 +17,12 @@
         .row {
             display: flex;
             flex-wrap: wrap;
-            justify-content: start; /* Align cards to the start, keeping them close */
+            justify-content: start;
         }
 
         .card {
             margin-bottom: 30px;
-            margin-right: 15px; /* Slightly reduce right margin to bring cards closer */
+            margin-right: 15px;
             width: 18rem;
             display: flex;
             flex-direction: column;
@@ -37,12 +37,12 @@
 
         .card-text {
             flex-grow: 1;
-            margin-bottom: 10px; /* Add some space below the biography */
+            margin-bottom: 10px;
         }
 
         .card-buttons .btn {
-            margin-top: 10px; /* Add vertical margin between buttons */
-            width: 100%; /* Make buttons full width */
+            margin-top: 10px;
+            width: 100%;
         }
 
         body {
@@ -53,7 +53,38 @@
             text-decoration: none;
             color: black;
         }
+
+        .comments-section {
+            margin-top: 20px;
+        }
+
+        .comment-user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .comment-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .comment-content {
+            flex-grow: 1;
+        }
     </style>
+    <script>
+        function toggleComments(elementId) {
+            var commentsSection = document.getElementById(elementId);
+            if (commentsSection.style.display === "none") {
+                commentsSection.style.display = "block";
+            } else {
+                commentsSection.style.display = "none";
+            }
+        }
+    </script>
 </head>
 <body>
 
@@ -95,6 +126,44 @@
                                 {% if request.user == player.creator %}
                                     <a href="{% url 'delete_player' player.player_id %}" class="btn btn-danger">Delete</a>
                                 {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- Comments Section -->
+                    <div class="comments-section">
+                        <button class="btn btn-secondary" onclick="toggleComments('comments-{{ player.player_id }}')">Show Comments</button>
+                        <div id="comments-{{ player.player_id }}" style="display: none;">
+                            <h5>Comments:</h5>
+                            <ul class="list-unstyled">
+                                {% for comment in player.comments.all %}
+                                    <li class="comment-item">
+                                        <img src="{{ comment.user.avatar.url }}" class="comment-user-avatar" alt="Avatar">
+                                        <div class="comment-content">
+                                            <strong>{{ comment.user.username }}:</strong> {{ comment.content }}
+                                            <small>{{ comment.created_at|date:"d M Y H:i" }}</small>
+                                            {% if request.user == comment.user %}
+                                                <form method="post" action="{% url 'delete_comment' comment.id %}" style="display: inline;">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                </form>
+                                            {% endif %}
+                                        </div>
+                                    </li>
+                                {% empty %}
+                                    <li>No comments yet.</li>
+                                {% endfor %}
+                            </ul>
+
+                            {% if request.user.is_authenticated %}
+                                <form method="post" action="{% url 'add_comment' player.player_id %}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <textarea class="form-control" name="content" rows="3" placeholder="Add a comment..."></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                            {% else %}
+                                <p><a href="{% url 'login' %}">Log in</a> to add a comment.</p>
                             {% endif %}
                         </div>
                     </div>

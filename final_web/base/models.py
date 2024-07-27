@@ -44,14 +44,14 @@ class User(AbstractUser):
 
 class Comment(models.Model):
         user = models.ForeignKey(User, on_delete=models.CASCADE)
-        player = models.ForeignKey(Player, on_delete=models.CASCADE)
+        player = models.ForeignKey(Player, related_name='comments', on_delete=models.CASCADE)
         content = models.TextField()
-        created= models.DateTimeField(auto_now_add=True)
+        created_at= models.DateTimeField(auto_now_add=True)
 
         class Meta:
-                ordering = ['-created']
+                ordering = ['-created_at']
 
         def __str__(self):
-                return self.body
+                return self.content
 
 

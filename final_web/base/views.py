@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.http import HttpResponse
-from .models import Player,User,Club, Nation
+from .models import Player,User,Club, Nation,Comment
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -159,3 +159,19 @@ def update_user(request):
             form.save()
             return redirect('profile', user.id )
     return render(request, 'base/update_user.html',{'form':form})
+
+@login_required
+def add_comment(request, player_id):
+    if request.method == 'POST':
+        player = get_object_or_404(Player, player_id=player_id)
+        content = request.POST.get('content')  # Make sure 'content' is the correct field name
+        if content:  # Ensure content is not empty
+            Comment.objects.create(user=request.user, player=player, content=content)
+    return redirect(request.META.get('HTTP_REFERER', '/'))
+
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id, user=request.user)
+    comment.delete()
+    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
