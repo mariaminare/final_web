@@ -36,7 +36,7 @@ class Player(models.Model):
             ordering= ['first_name']
 
         def __str__(self):
-                return f"{self.first_name} _ {self.last_name}"
+                return f"{self.first_name}  {self.last_name}"
 class User(AbstractUser):
         players = models.ManyToManyField(Player, blank=True, related_name="users")
         bio = models.TextField(null=True)

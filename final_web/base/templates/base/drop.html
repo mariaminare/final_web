@@ -1,5 +1,5 @@
 {% extends 'main.html' %}
-{% block title %} <title>Delete Player</title> {% endblock %}
+{% block title %} <title>Drop Player</title> {% endblock %}
 
 {% block content %}
 <style>
@@ -70,12 +70,12 @@
 
 <div class="delete-page">
     <div class="delete-box">
-        <h2>Confirm Deletion</h2>
-        <p>Are you sure you want to delete <strong>"{{ player }}"</strong>?</p>
+        <h2>Confirm Drop</h2>
+        <p>Are you sure you want to drop <strong>"{{ player }}"</strong>?</p>
         <form method="POST" action="">
             {% csrf_token %}
             <div class="button-group">
-                <button type="submit" class="btn btn-danger">Delete</button>
+                <button type="submit" class="btn btn-danger">Drop</button>
                 <a href="{% url 'home' %}" class="btn btn-secondary">Cancel</a>
             </div>
         </form>

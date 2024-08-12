@@ -14,5 +14,6 @@ urlpatterns = [
    path('delete_player/<str:id>/', views.delete_player, name='delete_player'),
    path('update_user/', views.update_user, name='update_user'),
    path('comment/<int:player_id>/', views.add_comment, name='add_comment'),
-   path('comment/delete/<int:comment_id>/', views.delete_comment, name='delete_comment')
+   path('comment/delete/<int:comment_id>/', views.delete_comment, name='delete_comment'),
+   path('drop/<str:id>/', views.drop, name='drop'),
 ]

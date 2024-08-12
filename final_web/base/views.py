@@ -56,6 +56,16 @@ def delete(request, id):
 
     return render(request, 'base/delete.html', {'player': player})
 
+@login_required(login_url='login')
+def drop(request, id):
+    player =Player.objects.get(player_id=id)
+
+    if request.method == "POST":
+        request.user.players.remove(player)
+        return redirect('profile', request.user.id)
+
+    return render(request, 'base/drop.html', {'player': player})
+
 
 def login_page(request):
     if request.user.is_authenticated:

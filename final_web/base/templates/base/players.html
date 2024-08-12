@@ -144,7 +144,7 @@
                             {% if request.user.is_authenticated %}
                                 <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#bioModal" data-bio="{{ player.biography }}" data-name="{{ player.first_name }} {{ player.last_name }}">Read More</a>
                                 {% if player in request.user.players.all %}
-                                    <a href="{% url 'delete' player.player_id %}" class="btn btn-danger">Drop</a>
+                                    <a href="{% url 'drop' player.player_id %}" class="btn btn-danger">Drop</a>
                                 {% else %}
                                     <a href="{% url 'adding' player.player_id %}" class="btn btn-success">Add</a>
                                 {% endif %}
