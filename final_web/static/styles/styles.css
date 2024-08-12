@@ -5,4 +5,26 @@ body {
 a {
     text-decoration: none;
     color: black;
+
+
+
+
+
+
+/* Frame around images */
+.image-frame {
+    border: 2px solid #ddd; /* Border around the image */
+    padding: 5px; /* Space between border and image */
+    margin: 15px 0; /* Space above and below the image */
+    background-color: #f9f9f9; /* Light background color */
+    max-width: 100%; /* Ensure the frame doesn't exceed the container width */
+    overflow: hidden; /* Hide overflow for better control */
+}
+
+/* Responsive image styling */
+.milestone-image {
+    width: 100%; /* Ensures image fits within the container */
+    height: auto; /* Keeps the aspect ratio */
+    display: block; /* Ensures no inline spacing issues */
+    object-fit: cover; /* Ensure the image covers the area, cropping if necessary */
 }

@@ -74,6 +74,31 @@
         .comment-content {
             flex-grow: 1;
         }
+
+        /* Floating "Add Player" Button */
+         .floating-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background-color: #343a40;
+            color: white;
+            border-radius: 30px; /* Rounded rectangle */
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .floating-btn:hover {
+            background-color: #495057;
+            text-decoration: none;
+            color: white;
+        }
     </style>
     <script>
         function toggleComments(elementId) {
@@ -87,6 +112,7 @@
     </script>
 </head>
 <body>
+
 
 <div class="home_container">
     <div class="clubs">
@@ -104,7 +130,6 @@
         <div class="centered-content">
             <h1>{{ heading }}</h1>
         </div>
-        <a href="{% url 'add' %}">Add Player</a>
         <br><br>
 
         <div class="row">
@@ -173,6 +198,9 @@
     </div>
 </div>
 
+<!-- Add Player Floating Button -->
+<a href="{% url 'add' %}" class="floating-btn">Add Player</a>
+
 <!-- Modal -->
 <div class="modal fade" id="bioModal" tabindex="-1" role="dialog" aria-labelledby="bioModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -212,148 +240,3 @@
 
 </body>
 </html>
-
-
-
-
-<!--<style>-->
-<!--    .home_container {-->
-<!--        display: grid;-->
-<!--        grid-template-columns: 1fr 5fr-->
-<!--    }-->
-
-<!--    .clubs {-->
-<!--        margin: 90px 30px;-->
-<!--    }-->
-
-<!--    .row{-->
-<!--        display: flex;-->
-<!--        flex-wrap: wrap;-->
-<!--    }-->
-
-<!--    .card{-->
-<!--        margin-bottom: 30px;-->
-<!--    }-->
-
-
-<!--</style>-->
-
-<!--<div class="home_container">-->
-
-<!--    <div class="clubs">-->
-<!--        <h1>Clubs:</h1>-->
-<!--        <br>-->
-<!--        <a href="{{ request.path }}">ALL ({{ clubs.count }})</a>-->
-<!--        {%for club in clubs%}-->
-<!--        <hr>-->
-<!--        <a href="{{ request.path }}?p={{club.name}}">{{club}} ({{club.players.count}})</a>-->
-<!--        {% endfor %}-->
-<!--    </div>-->
-
-
-
-<!--     <div>-->
-<!--        <br>-->
-
-<!--        <div class="centered-content" >-->
-<!--            <h1>{{heading}}</h1>-->
-<!--        </div>-->
-<!--         <a href="{% url 'add' %}">Add Player</a>-->
-<!--         <br>-->
-
-
-<!--        <br>-->
-
-<!--        <div style="display: flex;" class="row">-->
-<!--            {% for player in players %}-->
-<!--                <div class="card" style="width: 18rem; margin-left: 30px;">-->
-<!--                      <img src="{{player.picture.url}}" class="card-img-top" alt="..." style="width: 100%; height: 350px; object-fit: cover;">-->
-<!--                      <div class="card-body">-->
-<!--                        <h5 class="card-title">{{player.first_name}} {{player.last_name}}</h5>-->
-<!--                        <h6 class="card-title">{{player.club}}</h6>-->
-<!--                        <p class="card-text">{{player.biography |slice:"0:200"}}</p>-->
-<!--                          {% if request.user.is_authenticated %}-->
-<!--                            <a href="#" class="btn btn-primary">Read More</a>-->
-<!--                             {% if player in request.user.players.all%}-->
-<!--                                <a href="{% url 'delete' player.player_id %}" class="btn btn-primary">Delete</a>-->
-<!--                             {% else %}-->
-<!--                                 <a href="{% url 'adding' player.player_id %}" class="btn btn-primary">Add</a>-->
-<!--                             {% endif %}-->
-<!--                          {% endif %}-->
-<!--                      </div>-->
-<!--                </div>-->
-<!--            {% endfor %}-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--<style>-->
-<!--    .home_container {-->
-<!--        display: grid;-->
-<!--        grid-template-columns: 1fr 5fr-->
-<!--    }-->
-
-<!--    .clubs {-->
-<!--        margin: 90px 30px;-->
-<!--    }-->
-<!--</style>-->
-
-<!--<div class="home_container">-->
-
-<!--    <div class="clubs">-->
-<!--        <h1>Clubs:</h1>-->
-<!--        <br>-->
-<!--        <a href="{{ request.path }}">ALL ({{ clubs.count }})</a>-->
-<!--        {%for club in clubs%}-->
-<!--        <hr>-->
-<!--        <a href="{{ request.path }}?p={{club.name}}">{{club}} ({{club.players.count}})</a>-->
-<!--        {% endfor %}-->
-<!--    </div>-->
-
-
-
-<!--     <div>-->
-<!--        <br>-->
-
-<!--        <div class="centered-content" >-->
-<!--            <h1>{{heading}}</h1>-->
-<!--        </div>-->
-
-
-<!--        <br>-->
-
-<!--        <div style="display: flex; ">-->
-<!--            {% for player in players %}-->
-<!--                <div class="card" style="width: 18rem; margin-left: 30px;">-->
-<!--                      <img src="{{player.picture.url}}" class="card-img-top" alt="..." style="width: 100%; height: 350px; object-fit: cover;">-->
-<!--                      <div class="card-body">-->
-<!--                        <h5 class="card-title">{{player.first_name}} {{player.last_name}}</h5>-->
-<!--                        <h6 class="card-title">{{player.club}}</h6>-->
-<!--                        <p class="card-text">{{player.biography |slice:"0:200"}}</p>-->
-<!--                          {% if request.user.is_authenticated %}-->
-<!--                            <a href="#" class="btn btn-primary">Read More</a>-->
-<!--                             {% if player in request.user.players.all%}-->
-<!--                                <a href="{% url 'delete' player.player_id %}" class="btn btn-primary">Delete</a>-->
-<!--                             {% else %}-->
-<!--                                 <a href="{% url 'adding' player.player_id %}" class="btn btn-primary">Add</a>-->
-<!--                             {% endif %}-->
-<!--                          {% endif %}-->
-<!--                      </div>-->
-<!--                </div>-->
-<!--            {% endfor %}-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->

@@ -1,6 +1,51 @@
 {% extends 'main.html' %}
-{% block title %} <title>About Page</title> {% endblock %}
+
+{% load static %}
 
 {% block content %}
-     <h1>about html</h1>
+<div class="container">
+    <h1>Historical Milestones in Women’s Football</h1>
+    <div class="timeline">
+        <ul class="milestones-list">
+            <li>
+                <h3>1921 - Ban on Women’s Football by The FA</h3>
+                <div class="image-frame">
+                    <img src="{% static 'files/F.A. Ban.jpg' %}" alt="FA Ban on Women's Football" class="milestone-image">
+                </div>
+                <p>The Football Association in England bans women from playing on FA-affiliated pitches, a decision that hindered the growth of women’s football for 50 years.</p>
+            </li>
+            <li>
+                <h3>1996 - Women’s Football Debuts at the Olympics</h3>
+                <div class="image-frame">
+                    <img src="{% static 'files/1996 Olympics.jpg' %}" alt="Women's Football at the Olympics" class="milestone-image"
+                    style="width: 100%; max-width: 600px; height: auto; border: 2px solid #ddd; padding: 5px; background-color: #f9f9f9;">
+                </div>
+                <p>Women’s football was included in the Olympic Games for the first time, with the United States winning the gold medal in Atlanta, Georgia.</p>
+            </li>
+            <li>
+                <h3>2000 - Formation of the Women’s Professional Soccer League</h3>
+                <div class="image-frame">
+                    <img src="{% static 'files/2000 WPSL.jpg' %}" alt="Formation of WPSL" class="milestone-image">
+                </div>
+                <p>The Women’s Professional Soccer League (WPSL) was established, promoting the growth of women’s professional football in the United States.</p>
+            </li>
+            <li>
+                <h3>2015 - FIFA Women’s World Cup in Canada</h3>
+                <div class="image-frame">
+                    <img src="{% static 'files/2015 world cup.jpg' %}" alt="2015 FIFA Women's World Cup" class="milestone-image">
+                </div>
+                <p>The FIFA Women’s World Cup was held in Canada, with the United States winning the championship and marking a significant moment in the tournament's history.</p>
+            </li>
+            <li>
+                <h3>2023 - Record Attendance at Women’s Football Match</h3>
+                <div class="image-frame">
+                    <img src="{% static 'files/attendance.jpg' %}" alt="Record Attendance at Camp Nou" class="milestone-image"
+                    style="width: 100%; max-width: 800px; height: auto; border: 2px solid #ddd; padding: 5px; background-color: #f9f9f9;">
+                </div>
+                <p>The UEFA Women's Champions League semifinal between Barcelona and Wolfsburg set a record for attendance at a women’s football match, with 91,648 fans at Camp Nou.</p>
+            </li>
+        </ul>
+    </div>
+    <div class="parallax"></div>
+</div>
 {% endblock %}
