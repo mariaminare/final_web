@@ -3,6 +3,12 @@
 {% block title %} <title>Profile Page</title> {% endblock %}
 
 {% block content %}
-  <a href="{% url 'update_user' %}">Update Profile</a>
-  {% include 'base/players.html' %}
+  <div style="position: relative; padding-top: 20px;">
+    <!-- Button with inline styles for fixed positioning -->
+    <a href="{% url 'update_user' %}"
+       style="position: absolute; top: 0; right: 0; margin: 20px; background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-size: 16px;">Update Profile</a>
+
+    <!-- Rest of the content -->
+    {% include 'base/players.html' %}
+  </div>
 {% endblock %}

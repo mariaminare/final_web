@@ -15,9 +15,9 @@ class Player(models.Model):
         first_name = models.CharField(max_length=100)
         last_name = models.CharField(max_length=100)
         date_of_birth = models.DateField()
-        nation =models.ForeignKey(Nation, on_delete=models.SET("Unknown"), related_name='players')
+        nation =models.ForeignKey(Nation,on_delete=models.SET_NULL, null=True, related_name='players')
         position = models.CharField(max_length=50)
-        club = models.ForeignKey(Club, on_delete=models.SET("Unknown"), related_name='players')
+        club = models.ForeignKey(Club, on_delete=models.SET_NULL, null=True, related_name='players')
         previous_clubs = models.TextField()
         international_caps = models.IntegerField()  # IntegerField for whole numbers
         goals_scored = models.IntegerField()  # IntegerField for whole numbers
@@ -28,7 +28,7 @@ class Player(models.Model):
         achievements = models.TextField()
         picture = models.ImageField(blank=True,null=True)
 
-        creator = models.ForeignKey('User', on_delete=models.SET("Unknown Creator"))
+        creator = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)
         created=models.DateTimeField(auto_now_add=True)
         # updated = models.DateTimeField(auto_now=True)
 

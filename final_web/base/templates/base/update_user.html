@@ -1,4 +1,3 @@
-
 {% extends 'main.html' %}
 {% block title %} <title>Update Your Profile</title> {% endblock %}
 
@@ -10,8 +9,12 @@
                 <div class="card-header bg-secondary text-white text-center">
                     <h3>Update Your Profile</h3>
                 </div>
-                <div class="card-body p-4">
-                    <form method="POST" action="" enctype="multipart/form-data">
+                <div class="card-body d-flex flex-column align-items-center p-4">
+                    <!-- Display the current avatar -->
+                    <img src="{{ user.avatar.url }}" alt="Current Avatar" class="rounded-circle mb-4" width="150" height="150">
+
+                    <!-- Form to update profile -->
+                    <form method="POST" action="" enctype="multipart/form-data" style="width: 100%; max-width: 400px;">
                         {% csrf_token %}
                         {% for field in form %}
                             <div class="form-group mb-3">
